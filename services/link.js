@@ -129,7 +129,6 @@ export function LinkProvider(props) {
 
       const initializeLink = async () => {
         const linkTokenResponse = await getLinkToken({ itemId, userId });
-        console.log("window undefined-->", window.Plaid);
         handler = await window.Plaid.create({
           ...baseConfigs,
           token: await linkTokenResponse.data.link_token,
