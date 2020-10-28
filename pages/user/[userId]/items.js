@@ -4,13 +4,13 @@ import styles from "../styles/Home.module.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
-import { ItemList, Landing, Sockets } from "../components";
-import { AccountsProvider } from "../services/accounts";
-import { InstitutionsProvider } from "../services/institutions";
-import { ItemsProvider } from "../services/items";
-import { LinkProvider } from "../services/link";
-import { TransactionsProvider } from "../services/transactions";
-import { UsersProvider } from "../services/users";
+import { ItemList, Landing, Sockets } from "../../../components";
+import { AccountsProvider } from "../../../services/accounts";
+import { InstitutionsProvider } from "../../../services/institutions";
+import { ItemsProvider } from "../../../services/items";
+import { LinkProvider } from "../../../services/link";
+import { TransactionsProvider } from "../../../services/transactions";
+import { UsersProvider } from "../../../services/users";
 
 export default function Home() {
   toast.configure({
@@ -29,7 +29,7 @@ export default function Home() {
               <TransactionsProvider>
                 <UsersProvider>
                   <Sockets />
-                  <Landing />
+                  <ItemList />
                 </UsersProvider>
               </TransactionsProvider>
             </AccountsProvider>
