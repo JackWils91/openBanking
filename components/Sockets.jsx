@@ -7,6 +7,7 @@ import { useAccounts, useItems, useTransactions } from "../services";
 const { REACT_APP_SERVER_PORT = 5000 } = process.env;
 
 export default function Sockets() {
+  console.log("REACT_APP_SERVER_PORT-->", REACT_APP_SERVER_PORT);
   const socket = useRef();
   const { getAccountsByItem } = useAccounts();
   const { getTransactionsByItem } = useTransactions();
@@ -28,6 +29,7 @@ export default function Sockets() {
     });
 
     socket.current.on("INITIAL_UPDATE", ({ itemId } = {}) => {
+      console.log("getting into initial update");
       const msg = `New Webhook Event: Item ${itemId}: Initial Transactions Received`;
       console.log(msg);
       toast(msg);

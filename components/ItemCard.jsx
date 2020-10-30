@@ -17,10 +17,12 @@ const propTypes = {
 };
 
 const ItemCard = ({ item, userId }) => {
+  console.log("item-->", item);
   const [accounts, setAccounts] = useState([]);
+  console.log("accounts-->", accounts);
   const [institution, setInstitution] = useState({});
   const [showAccounts, setShowAccounts] = useState(false);
-
+  console.log("showAccounts-->", showAccounts);
   const { accountsByItem, deleteAccountsByItemId } = useAccounts();
   const { deleteItemById } = useItems();
   const { deleteTransactionsByItemId } = useTransactions();
@@ -33,8 +35,14 @@ const ItemCard = ({ item, userId }) => {
   const { id, plaid_institution_id, status } = item;
   const isSandbox = PLAID_ENV === "sandbox";
   const isGoodState = status === "good";
+  console.log("id accounts by item-->", id);
+  // update data store with each items bank accounts
+  // useEffect(() => {
+  //   getAccountsByItem(id);
+  // }, [getAccountsByItem, id]);
 
   useEffect(() => {
+    console.log("func accounts by item-->", accountsByItem[id]);
     setAccounts(accountsByItem[id] || []);
   }, [accountsByItem, id]);
 

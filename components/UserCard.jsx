@@ -42,7 +42,13 @@ const UserCard = ({ user }) => {
             Link an Item
           </LinkButton>
           {!!numOfItems && (
-            <Link className="user-card__link" href={`/user/${user.id}/items`}>
+            <Link
+              className="user-card__link"
+              href={{
+                pathname: "/user/[userId]/items",
+                query: { userId: user.id },
+              }}
+            >
               {`View ${numOfItems} Linked ${pluralize("Item", numOfItems)}`}
             </Link>
           )}

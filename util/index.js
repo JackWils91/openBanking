@@ -1,4 +1,4 @@
-import { formatDistance, parse } from "date-fns";
+import { formatDistance, parseISO } from "date-fns";
 
 /**
  * @desc small helper for pluralizing words for display given a number of items
@@ -56,7 +56,7 @@ export function formatDate(timestamp) {
  * @desc Checks the difference between the current time and a provided time
  */
 export function diffBetweenCurrentTime(timestamp) {
-  return formatDistance(new Date(), parse(timestamp), {
+  return formatDistance(parseISO(timestamp), new Date(), {
     addSuffix: true,
     includeSeconds: true,
   }).replace(/^(about|less than)\s/i, "");

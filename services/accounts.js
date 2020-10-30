@@ -5,15 +5,15 @@ import React, {
   useRef,
   useReducer,
   useCallback,
-} from 'react';
-import groupBy from 'lodash/groupBy';
-import keyBy from 'lodash/keyBy';
-import omitBy from 'lodash/omitBy';
+} from "react";
+import groupBy from "lodash/groupBy";
+import keyBy from "lodash/keyBy";
+import omitBy from "lodash/omitBy";
 
 import {
   getAccountsByItem as apiGetAccountsByItem,
   getAccountsByUser as apiGetAccountsByUser,
-} from './api';
+} from "./api";
 
 const AccountsContext = createContext();
 
@@ -47,9 +47,11 @@ export function AccountsProvider(props) {
    * A 'refresh' parameter can force a request for new data even if local state exists.
    */
   const getAccountsByItem = useCallback(async (itemId, refresh) => {
+    console.log("getAccountsByItem-->", itemId, refresh);
     if (!hasRequested.current.byItem[itemId] || refresh) {
       hasRequested.current.byItem[itemId] = true;
       const { data: payload } = await apiGetAccountsByItem(itemId);
+      console.log("getting inside of getAccountsByItem", payload);
       dispatch([types.SUCCESSFUL_GET, payload]);
     }
   }, []);
@@ -71,7 +73,7 @@ export function AccountsProvider(props) {
    * @desc Will delete all accounts that belong to an individual Item.
    * There is no api request as apiDeleteItemById in items delete all related transactions
    */
-  const deleteAccountsByItemId = useCallback(itemId => {
+  const deleteAccountsByItemId = useCallback((itemId) => {
     dispatch([types.DELETE_BY_ITEM, itemId]);
   }, []);
 
@@ -79,7 +81,7 @@ export function AccountsProvider(props) {
    * @desc Will delete all accounts that belong to an individual User.
    * There is no api request as apiDeleteItemById in items delete all related transactions
    */
-  const deleteAccountsByUserId = useCallback(userId => {
+  const deleteAccountsByUserId = useCallback((userId) => {
     dispatch([types.DELETE_BY_USER, userId]);
   }, []);
 
@@ -93,8 +95,8 @@ export function AccountsProvider(props) {
     return {
       allAccounts,
       accountsById,
-      accountsByItem: groupBy(allAccounts, 'item_id'),
-      accountsByUser: groupBy(allAccounts, 'user_id'),
+      accountsByItem: groupBy(allAccounts, "item_id"),
+      accountsByUser: groupBy(allAccounts, "user_id"),
       getAccountsByItem,
       getAccountsByUser,
       deleteAccountsByItemId,
@@ -115,6 +117,15 @@ export function AccountsProvider(props) {
  * @desc Handles updates to the Accounts state as dictated by dispatched actions.
  */
 function reducer(state, [type, payload]) {
+  console.log(
+    "accounts reducer-->",
+    "state:",
+    state,
+    "type:",
+    type,
+    "payload:",
+    payload
+  );
   switch (type) {
     case types.SUCCESSFUL_GET:
       if (!payload.length) {
@@ -122,14 +133,14 @@ function reducer(state, [type, payload]) {
       }
       return {
         ...state,
-        ...keyBy(payload, 'id'),
+        ...keyBy(payload, "id"),
       };
     case types.DELETE_BY_ITEM:
-      return omitBy(state, transaction => transaction.item_id === payload);
+      return omitBy(state, (transaction) => transaction.item_id === payload);
     case types.DELETE_BY_USER:
-      return omitBy(state, transaction => transaction.user_id === payload);
+      return omitBy(state, (transaction) => transaction.user_id === payload);
     default:
-      console.warn('unknown action: ', { type, payload });
+      console.warn("unknown action: ", { type, payload });
       return state;
   }
 }
@@ -139,7 +150,7 @@ function reducer(state, [type, payload]) {
  */
 export default function useAccounts() {
   const context = useContext(AccountsContext);
-
+  console.log("context useAccounts", context);
   if (!context) {
     throw new Error(`useAccounts must be used within an AccountsProvider`);
   }

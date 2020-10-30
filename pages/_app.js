@@ -1,3 +1,4 @@
+// import "../styles/index.css";
 import "../styles/globals.css";
 
 import { AccountsProvider } from "../services/accounts";
@@ -6,6 +7,7 @@ import { ItemsProvider } from "../services/items";
 import { LinkProvider } from "../services/link";
 import { TransactionsProvider } from "../services/transactions";
 import { UsersProvider } from "../services/users";
+import { Sockets } from "../components";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -15,6 +17,7 @@ function MyApp({ Component, pageProps }) {
           <AccountsProvider>
             <TransactionsProvider>
               <UsersProvider>
+                <Sockets />
                 <Component {...pageProps} />
               </UsersProvider>
             </TransactionsProvider>

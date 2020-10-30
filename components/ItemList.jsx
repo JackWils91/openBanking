@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
+
 import sortBy from "lodash/sortBy";
 
 import { useItems, useAccounts, useUsers } from "../services";
@@ -7,7 +9,12 @@ import { pluralize } from "../util";
 import ItemCard from "./ItemCard";
 import { Banner, LinkButton, UserDetails } from ".";
 
-const ItemList = ({ match }) => {
+const ItemList = () => {
+  const {
+    query: { userId: userId1 },
+  } = useRouter();
+  if (!userId1) return null;
+  console.log("router-->", userId1);
   const [user, setUser] = useState({});
   const [items, setItems] = useState([]);
 
@@ -15,7 +22,9 @@ const ItemList = ({ match }) => {
   const { itemsByUser, getItemsByUser } = useItems();
   const { getAccountsByUser } = useAccounts();
 
-  const userId = Number(match.params.userId);
+  const userId = Number(userId1);
+
+  console.log("router1-->", userId);
 
   // update data store with user
   useEffect(() => {

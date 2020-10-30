@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../styles/Home.module.css";
+// import styles from "../styles/Home.module.css";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
@@ -14,10 +14,5 @@ export default function Home() {
     bodyClassName: "toast__body",
     hideProgressBar: true,
   });
-  return (
-    <div className={styles.container}>
-      <Sockets />
-      <Landing />
-    </div>
-  );
+  return <Landing />;
 }
